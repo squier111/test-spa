@@ -1,28 +1,10 @@
 import React , {Component}  from 'react';
 import {connect} from 'react-redux';
 import './order-table.css';
-import WithSpaService from '../hoc'
-import {itemsLoaded} from '../../actions';
 
 
 class OrderTable extends Component {
 
-
-  componentDidMount() {
-      // 1. receive data
-        const {WithSpaService , itemsLoaded} = this.props;
-    
-        // 2.dispacth action to store
-
-      WithSpaService.updateResource();
-
-      WithSpaService.getResource().then((data)=>{
-          console.log(data);
-          itemsLoaded(data);
-      });
-      // service
-      // .then((data) => booksLoaded(data))
-  }
 
   RenderRow = (item, idx) => {
       const {id, date, orderId , typeOrder,customer,provider, dateDone, status} = item;
@@ -63,12 +45,5 @@ const mapStateToProps = ({cartItems}) => {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    itemsLoaded: (item) => {
-      dispatch(itemsLoaded(item));
-    },
-  }
-}
 
-export default WithSpaService()(connect(mapStateToProps, mapDispatchToProps)(OrderTable));
+export default connect(mapStateToProps)(OrderTable);

@@ -1,20 +1,24 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
+import {submitForm , nameForm, emailForm} from '../../actions';
+import WithSpaService from '../hoc'
 
 class OrderPage extends Component {
 
 
-
-  onLabelChangeMail =(e) =>{
-    console.log(e.target.value);
+  onLabelChangeMail =(e) => {
+    this.props.emailForm(e.target.value);
   }
   onLabelChangeName = (e) => {
-    console.log(e.target.value);
+    this.props.nameForm(e.target.value);
   }
 
 
   onSubmit =(e) => {
     e.preventDefault();
+    // this.props.WithSpaService.postResource(newItem);
+    this.props.onSubmit();
+
 
   }
 
@@ -24,10 +28,10 @@ class OrderPage extends Component {
         <div>
           <h3>Заказчик</h3>
           <div className="row">
-            <input type="text" placeholder="E-mail" onChange={this.onLabelChangeMail}/>
+            <input type="text" placeholder="E-mail"  onChange={this.onLabelChangeMail}  />
           </div>
           <div className="row">
-            <input type="text" placeholder="Name" onChange={this.onLabelChangeName}/>
+            <input type="text" placeholder="Name"  onChange={this.onLabelChangeName}  />
           </div>
           <div className="row">
             <input type="text" placeholder="Surname" />
@@ -69,6 +73,22 @@ class OrderPage extends Component {
   }
 }
 
+const mapStateToProps = () => {
+  return {};
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmit: () => {
+      dispatch(submitForm());
+    },
+    nameForm: (name) => {
+      dispatch(nameForm(name));
+    },
+    emailForm: (mail) => {
+      dispatch(emailForm(mail));
+    },
+  }
+}
 
 
-export default (connect()(OrderPage));
+export default WithSpaService()(connect(mapStateToProps, mapDispatchToProps)(OrderPage));

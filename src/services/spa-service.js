@@ -34,24 +34,6 @@ export default class SpaService {
       .then((response) => response.json)
   }
 
-
-
-  // getAllPeople = async () => {
-  //   const res = await this.getResource(`/people/`);
-  //   return res.results.map(this._transformPerson);
-  // }
-
-  // _transformPlanet = (planet) => {
-  //   return {
-  //       id: this._extractId(planet),
-  //       name:planet.name,
-  //       population:planet.population,
-  //       rotationPeriod:planet.rotation_period,
-  //       diameter:planet.diameter,
-  //       climate:planet.climate,
-  //   }
-  // };
-
 }
 
 
@@ -62,5 +44,5 @@ const service = new SpaService();
 // service.postResource({ customer: "check", typeOrder: "Msd" })
 
 service.getResource().then((orderInfo)=>{
-    console.log(orderInfo);
+    // console.log(orderInfo);
 });
