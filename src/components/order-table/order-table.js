@@ -9,15 +9,14 @@ class OrderTable extends Component {
 
 
   componentDidMount() {
-    // 1. receive data
-    const {WithSpaService , itemsLoaded} = this.props;
-    // const data = bookstoreService.getBooks();
-    // this.props.booksLoaded(data);
-    // console.log(data);
+      // 1. receive data
+        const {WithSpaService , itemsLoaded} = this.props;
     
         // 2.dispacth action to store
 
-        WithSpaService.getResource().then((data)=>{
+      WithSpaService.updateResource();
+
+      WithSpaService.getResource().then((data)=>{
           console.log(data);
           itemsLoaded(data);
       });

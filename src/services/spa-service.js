@@ -11,6 +11,30 @@ export default class SpaService {
     return await res.json();
   }
 
+  postResource = async (data) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+    return await fetch(`${this._apiBase}`, options)
+      .then((response) => response.json)
+  }
+
+  updateResource = async () => {
+    const options1 = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }
+    return await fetch(`${this._apiBase}`, options1)
+      .then((response) => response.json)
+  }
+
+
 
   // getAllPeople = async () => {
   //   const res = await this.getResource(`/people/`);
@@ -33,6 +57,10 @@ export default class SpaService {
 
 const service = new SpaService();
 
+
+
+// service.postResource({ customer: "check", typeOrder: "Msd" })
+
 service.getResource().then((orderInfo)=>{
-    // console.log(orderInfo);
+    console.log(orderInfo);
 });
