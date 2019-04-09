@@ -5,7 +5,6 @@ import WithSpaService from '../hoc'
 
 class OrderPage extends Component {
 
-
   onLabelChangeMail =(e) => {
     this.props.emailForm(e.target.value);
   }
@@ -28,10 +27,10 @@ class OrderPage extends Component {
         <div>
           <h3>Заказчик</h3>
           <div className="row">
-            <input type="text" placeholder="E-mail"  onChange={this.onLabelChangeMail}  />
+            <input type="text" placeholder="E-mail" value ={this.props.emailForm()}  onChange={this.onLabelChangeMail}  />
           </div>
           <div className="row">
-            <input type="text" placeholder="Name"  onChange={this.onLabelChangeName}  />
+            <input type="text" placeholder="Name" value={this.props.nameForm()} onChange={this.onLabelChangeName}  />
           </div>
           <div className="row">
             <input type="text" placeholder="Surname" />
