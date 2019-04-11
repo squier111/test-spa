@@ -5,10 +5,10 @@ const itemsLoaded = (newitems) => {
   };
 };
 
-const nameForm =(name) => {
+const nameForm =(customer) => {
   return {
     type: 'FETCH_NAME_FORM',
-    payload: name,
+    payload: customer,
   }
 }
 const emailForm =(mail) => {
@@ -23,9 +23,9 @@ const emailForm =(mail) => {
 
 const submitForm = () => async (dispatch , getState) => {
   try {
-    const { newItem: { name, email } } = getState();
+    const { newItem: { customer, email } } = getState();
     const data = {
-        name: name,
+        customer: customer,
         email: email
       };
     const options = {
@@ -50,34 +50,6 @@ const submitForm = () => async (dispatch , getState) => {
   
 
 };
-
-
-// const submitForm = (dispatch) => {
-//   return (dispatch, getState) => {
-//     const
-//         state = getState(),
-//         newEvent = state.newEvent,
-//         title = newEvent.title,
-//         description = newEvent.description,
-//         data = {
-//             title: title,
-//             description: description
-//         };
-//         const postResource = async (data) => {
-//           const options = {
-//             method: 'POST',
-//             headers: {
-//               'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(data)
-//           }
-//           return await fetch(`${this._apiBase}`, options)
-//             .then((response) => response.json)
-//         }
-//       console.log(state);   
-//   }
-// }
-
 
 
 

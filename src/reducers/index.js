@@ -1,20 +1,18 @@
 const initialState = {
   loading: true,
+  isValid: false,
   error:null,
   cartItems: [],
   newItem: {
-    name: '',
+    customer: '',
     email: ''
   },
 };
 
 const reducer = (state = initialState, action) => {
 
-  console.log(state);
-
   switch (action.type) {
     case 'FETCH_ITEMS_SUCCESS':
-      console.log(action.payload);
       return {
         ...state,
         cartItems: action.payload, 
@@ -27,7 +25,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         newItem: {
           ...state.newItem,
-          name: action.payload,
+          customer: action.payload,
         },
         loading:true,
         error:null,
@@ -50,6 +48,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         newItem: {},
+        isValid: false,
         loading:true,
         error:null,
       };

@@ -4,12 +4,21 @@ import {submitForm , nameForm, emailForm} from '../../actions';
 import WithSpaService from '../hoc'
 
 class OrderPage extends Component {
+  constructor(){
+    super();
+    this.state={
+      customer: '',
+      email: '',
+    }
+  }
 
   onLabelChangeMail =(e) => {
-    this.props.emailForm(e.target.value);
+    this.setState({email:e.target.value})
+    this.props.emailForm(this.state.email);
   }
   onLabelChangeName = (e) => {
-    this.props.nameForm(e.target.value);
+    this.setState({customer:e.target.value})
+    this.props.nameForm(this.state.customer);
   }
 
 
@@ -17,20 +26,24 @@ class OrderPage extends Component {
     e.preventDefault();
     // this.props.WithSpaService.postResource(newItem);
     this.props.onSubmit();
-
+    this.setState({
+      customer: '',
+      email: '',
+    });
 
   }
 
   render () {
+    const {customer, email} = this.state;
     return (
     <form className="order-page" onSubmit ={this.onSubmit}>
         <div>
           <h3>Заказчик</h3>
           <div className="row">
-            <input type="text" placeholder="E-mail" value ={this.props.emailForm()}  onChange={this.onLabelChangeMail}  />
+            <input type="text" placeholder="E-mail" value={email}  onChange={this.onLabelChangeMail} />
           </div>
           <div className="row">
-            <input type="text" placeholder="Name" value={this.props.nameForm()} onChange={this.onLabelChangeName}  />
+            <input type="text" placeholder="Name" value={customer}  onChange={this.onLabelChangeName}  />
           </div>
           <div className="row">
             <input type="text" placeholder="Surname" />
@@ -80,8 +93,8 @@ const mapDispatchToProps = (dispatch) => {
     onSubmit: () => {
       dispatch(submitForm());
     },
-    nameForm: (name) => {
-      dispatch(nameForm(name));
+    nameForm: (customer) => {
+      dispatch(nameForm(customer));
     },
     emailForm: (mail) => {
       dispatch(emailForm(mail));
