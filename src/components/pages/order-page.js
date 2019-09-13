@@ -24,8 +24,8 @@ class OrderPage extends Component {
 
   onSubmit =(e) => {
     e.preventDefault();
-    // this.props.WithSpaService.postResource(newItem);
-    this.props.onSubmit();
+    const spa = this.props.WithSpaService;
+    this.props.onSubmit(spa);
     this.setState({
       customer: '',
       email: '',
@@ -90,8 +90,8 @@ const mapStateToProps = () => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: () => {
-      dispatch(submitForm());
+    onSubmit: (spa) => {
+      dispatch(submitForm(spa));
     },
     nameForm: (customer) => {
       dispatch(nameForm(customer));

@@ -1,3 +1,7 @@
+
+import SpaService from '../services/spa-service'
+const spa = new SpaService();
+
 const itemsLoaded = (newitems) => {
   return {
     type: 'FETCH_ITEMS_SUCCESS',
@@ -21,39 +25,35 @@ const emailForm =(mail) => {
 
 //action-creator отправки формы
 
-const submitForm = () => async (dispatch , getState) => {
-  try {
-    const { newItem: { customer, email } } = getState();
-    const data = {
-        customer,
-        email
-      };
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }
-    await fetch('http://localhost:3000/orderInfo', options);
-    dispatch({
-      type: 'SUBMIT_FORM'
-    });
+const submitForm = (spa) =>  (dispatch , getState) => {
+
+  console.log(spa)
+  const { newItem: { customer, email } } = getState();
+  const data = {
+      customer,
+      email
+    };
+    spa.postResource(data);
+  dispatch({
+    type: 'SUBMIT_FORM'
+  });
+  // try {
+  //   const options = {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(data)
+  //   }
+  //   //await fetch('http://localhost:3000/orderInfo', options);
   
-  } catch (err) {
-    throw new Error(`could not fetchу ${err}`)
-    // обработка ошибки
+  // } catch (err) {
+  //   throw new Error(`could not fetchу ${err}`)
+  //   // обработка ошибки
   
-  }
+  // }
 };
 
-
-
-// const submitForm =() => {
-//   return {
-//     type: 'SUBMIT_FORM',
-//   }
-// }
 
 export {
   itemsLoaded,
