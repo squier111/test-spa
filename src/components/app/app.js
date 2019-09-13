@@ -22,10 +22,7 @@ class App extends Component {
         WithSpaService.getResource().then((data)=>{
           itemsLoaded(data);
       });
-      // service
-      // .then((data) => booksLoaded(data))
   }
-
 
   render() {
     return (

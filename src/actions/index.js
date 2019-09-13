@@ -1,7 +1,4 @@
 
-import SpaService from '../services/spa-service'
-const spa = new SpaService();
-
 const itemsLoaded = (newitems) => {
   return {
     type: 'FETCH_ITEMS_SUCCESS',
@@ -27,7 +24,6 @@ const emailForm =(mail) => {
 
 const submitForm = (spa) =>  (dispatch , getState) => {
 
-  console.log(spa)
   const { newItem: { customer, email } } = getState();
   const data = {
       customer,
