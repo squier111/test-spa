@@ -1,0 +1,21 @@
+.order-table h2 {
+    background-color: #009cd5;
+    margin: -10px -10px 17px -10px;
+    color: #fff;
+    padding: 10px 20px;
+}
+.order-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.order-table table td {
+    text-align: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #e2e2e3;
+}
+.order-table table th {
+    text-align: center;
+    font-weight: 600;
+    padding: 15px 10px;
+    border-bottom: 1px solid #e2e2e3;
+}

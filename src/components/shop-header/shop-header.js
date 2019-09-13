@@ -1,17 +1,17 @@
 import React from 'react';
 import './shop-header.css';
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 const Header =() => {
   return <div className="header">
            <ul className="header-list">
               <li>
-                <Link to='/' className="link">ReStore</Link>
+                <NavLink exact={true} to='/' className="link">Start</NavLink>
               </li>
               <li>
-                <Link to='/cart' className="link">Zakazi</Link>
+                <NavLink exact={true} to='/cart' className="link">Zakazi</NavLink>
               </li>
               <li>
-                <Link to='/order' className="link">Novij zakaz</Link>
+                <NavLink exact={true} to='/order' className="link">Novij zakaz</NavLink>
               </li>
            </ul>
         </div>

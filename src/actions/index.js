@@ -25,8 +25,8 @@ const submitForm = () => async (dispatch , getState) => {
   try {
     const { newItem: { customer, email } } = getState();
     const data = {
-        customer: customer,
-        email: email
+        customer,
+        email
       };
     const options = {
       method: 'POST',
@@ -35,7 +35,7 @@ const submitForm = () => async (dispatch , getState) => {
       },
       body: JSON.stringify(data)
     }
-    const response = await fetch('http://localhost:3000/orderInfo', options);
+    await fetch('http://localhost:3000/orderInfo', options);
     dispatch({
       type: 'SUBMIT_FORM'
     });
@@ -45,10 +45,6 @@ const submitForm = () => async (dispatch , getState) => {
     // обработка ошибки
   
   }
-  finally {
- }
-  
-
 };
 
 

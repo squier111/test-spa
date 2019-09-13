@@ -11,6 +11,7 @@ class OrderTable extends Component {
       return (
         <tr key = {id}>
           <td>{date}</td>
+          <td>{customer}</td>
           <td>{orderId}</td>
           <td>{typeOrder}</td>
           <td>{customer}</td>
@@ -23,10 +24,18 @@ class OrderTable extends Component {
   render () {
     return (
       <div className="order-table">
+          <h2>Simple table</h2>
           <table>
             <thead>
               <tr>
-                  <th>Simple table</th>
+                  <th>Дата</th>
+                  <th>Имя</th>
+                  <th>ID заказа</th>
+                  <th>Тип заказа</th>
+                  <th>Заказчик</th>
+                  <th>Поставщик</th>
+                  <th>Выполнен</th>
+                  <th>Статус</th>
               </tr>
             </thead>
             <tbody>

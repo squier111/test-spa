@@ -6,7 +6,6 @@ const CartPage =() => {
 
   
   return <div className="card-page">
-           cart-page
            <OrderTable/>
         </div>
 }

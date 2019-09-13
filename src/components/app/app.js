@@ -31,23 +31,25 @@ class App extends Component {
     return (
       <div className="wrapper">
           <Header/>
-          <Switch>
-            <Route
-              path='/'
-              component ={HomePage}
-              exact
-              />
-            <Route
-              path='/cart'
-              component ={CartPage}
-              exact
-              />
-            <Route
-              path='/order'
-              component ={OrderPage}
-              exact
-              />
-          </Switch>
+          <div className="router">
+            <Switch>
+              <Route
+                path='/'
+                component ={HomePage}
+                exact
+                />
+              <Route
+                path='/cart'
+                component ={CartPage}
+                exact
+                />
+              <Route
+                path='/order'
+                component ={OrderPage}
+                exact
+                />
+            </Switch>
+          </div>
       </div>
     )
   }
