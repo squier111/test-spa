@@ -1,22 +1,19 @@
 import React , {Component}  from 'react';
-import {connect} from 'react-redux';
 import './order-table.css';
 
 
 class OrderTable extends Component {
-
-
   RenderRow = (item, idx) => {
-      const {id, date, orderId , typeOrder,customer,provider, dateDone, status} = item;
+      const {id, email, name , notes, order,orderid, phone, position, provider, surname, dateToDone, status} = item;
       return (
         <tr key = {id}>
-          <td>{date}</td>
-          <td>{customer}</td>
-          <td>{orderId}</td>
-          <td>{typeOrder}</td>
-          <td>{customer}</td>
+          <td>22.22.02</td>
+          <td>{`${name} ${surname}`}</td>
+          <td>{orderid}</td>
+          <td>{order}</td>
+          <td>{`${name} ${surname}`}</td>
           <td>{provider}</td>
-          <td>{dateDone}</td>
+          <td>{dateToDone}</td>
           <td>{status}</td>
         </tr>
       )
@@ -24,7 +21,7 @@ class OrderTable extends Component {
   render () {
     return (
       <div className="order-table">
-          <h2>Simple table</h2>
+          <h2>Order table</h2>
           <table>
             <thead>
               <tr>
@@ -48,11 +45,4 @@ class OrderTable extends Component {
 }
 
 
-const mapStateToProps = ({cartItems}) => {
-  return {
-    items:cartItems,
-  };
-}
-
-
-export default connect(mapStateToProps)(OrderTable);
+export default OrderTable;

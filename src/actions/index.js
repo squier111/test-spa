@@ -1,4 +1,5 @@
 
+
 const itemsLoaded = (newitems) => {
   return {
     type: 'FETCH_ITEMS_SUCCESS',
@@ -6,54 +7,47 @@ const itemsLoaded = (newitems) => {
   };
 };
 
-const nameForm =(customer) => {
+const itemsRequest = () => {
   return {
-    type: 'FETCH_NAME_FORM',
-    payload: customer,
-  }
-}
-const emailForm =(mail) => {
-  return {
-    type: 'FETCH_EMAIL_FORM',
-    payload: mail,
-  }
-}
+    type: 'FETCH_ITEMS_REQUESTED',
+  };
+};
 
+const itemsError = () => {
+  return {
+    type: 'FETCH_ITEMS_ERROR',
+  };
+};
 
 //action-creator отправки формы
 
 const submitForm = (spa) =>  (dispatch , getState) => {
-
-  const { newItem: { customer, email } } = getState();
+    const getstate = getState();
+    const full = getstate.form.simple.values;
+    console.log(full);
   const data = {
-      customer,
-      email
+      email: full.email,
+      name: full.name,
+      notes: full.notes,
+      order: full.order,
+      orderid: full.orderid,
+      phone: full.phone,
+      position: full.position,
+      provider: full.provider,
+      surname: full.surname,
+      dateToDone: full.dateToDone,
+      status: 'done',
     };
     spa.postResource(data);
   dispatch({
     type: 'SUBMIT_FORM'
   });
-  // try {
-  //   const options = {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   }
-  //   //await fetch('http://localhost:3000/orderInfo', options);
-  
-  // } catch (err) {
-  //   throw new Error(`could not fetchу ${err}`)
-  //   // обработка ошибки
-  
-  // }
 };
 
 
 export {
   itemsLoaded,
   submitForm,
-  nameForm,
-  emailForm
+  itemsError,
+  itemsRequest
 };

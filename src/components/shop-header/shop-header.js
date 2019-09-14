@@ -8,10 +8,10 @@ const Header =() => {
                 <NavLink exact={true} to='/' className="link">Start</NavLink>
               </li>
               <li>
-                <NavLink exact={true} to='/cart' className="link">Zakazi</NavLink>
+                <NavLink exact={true} to='/cart' className="link">Orders</NavLink>
               </li>
               <li>
-                <NavLink exact={true} to='/order' className="link">Novij zakaz</NavLink>
+                <NavLink exact={true} to='/order' className="link">New order</NavLink>
               </li>
            </ul>
         </div>

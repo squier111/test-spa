@@ -1,172 +1,116 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-import {submitForm , nameForm, emailForm} from '../../actions';
+import {submitForm , itemsRequest, itemsError} from '../../actions';
 import WithSpaService from '../hoc';
+import {reset} from 'redux-form';
 import { Field, reduxForm } from 'redux-form';
+import './order-page.css';
 
 class OrderPage extends Component {
-  constructor(){
-    super();
-    this.state={
-      customer: '',
-      email: '',
-    }
-  }
-
-  onLabelChangeMail =(e) => {
-    this.setState({email:e.target.value})
-    this.props.emailForm(this.state.email);
-  }
-  onLabelChangeName = (e) => {
-    this.setState({customer:e.target.value})
-    this.props.nameForm(this.state.customer);
-  }
-
 
   onSubmit =(e) => {
     e.preventDefault();
     const spa = this.props.WithSpaService;
     this.props.onSubmit(spa);
-    this.setState({
-      customer: '',
-      email: '',
-    });
-
   }
 
   render () {
-    const {customer, email} = this.state;
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>First Name</label>
-        <div>
+    <form className="order-form" onSubmit={this.onSubmit}>
+      <div className="form-part">
+        <h3>Customer</h3>
+        <div className="form-row">
+          <label>Email</label>
+            <Field
+              name="email"
+              component="input"
+              type="email"
+              placeholder="Email"
+              />
+        </div>
+        <div className="form-row">
+          <label>Name</label>
           <Field
-            name="firstName"
+            name="name"
             component="input"
             type="text"
-            placeholder="First Name"
+            placeholder="Name"
           />
         </div>
-      </div>
-      <div>
-        <label>Last Name</label>
-        <div>
+        <div className="form-row">
+          <label>Surname</label>
           <Field
-            name="lastName"
+            name="surname"
             component="input"
             type="text"
-            placeholder="Last Name"
+            placeholder="Surname"
           />
         </div>
-      </div>
-      <div>
-        <label>Email</label>
-        <div>
+        <div className="form-row">
+          <label>Phone</label>
           <Field
-            name="email"
+            name="phone"
             component="input"
-            type="email"
-            placeholder="Email"
+            type="text"
+            placeholder="Phone"
           />
         </div>
       </div>
-      <div>
-        <label>Sex</label>
-        <div>
-          <label>
-            <Field name="sex" component="input" type="radio" value="male" />
-            {' '}
-            Male
-          </label>
-          <label>
-            <Field name="sex" component="input" type="radio" value="female" />
-            {' '}
-            Female
-          </label>
+      <div className="form-part">
+        <h3>Order</h3>
+        <div className="form-row">
+          <label>Position</label>
+          <Field
+            name="position"
+            component="input"
+            type="text"
+            placeholder="Position"
+          />
         </div>
-      </div>
-      <div>
-        <label>Favorite Color</label>
-        <div>
-          <Field name="favoriteColor" component="select">
-            <option />
-            <option value="ff0000">Red</option>
-            <option value="00ff00">Green</option>
-            <option value="0000ff">Blue</option>
+        <div className="form-row">
+          <label>Type of order</label>
+          <Field name="order" component="select"  placeholder="choose your type">
+            <option value='choose your type'>choose your type</option>
+            <option value="retail">retail</option>
+            <option value="wholesale">wholesale</option>
           </Field>
         </div>
-      </div>
-      <div>
-        <label htmlFor="employed">Employed</label>
-        <div>
+        <div className="form-row">
+          <label>Provider</label>
+          <Field name="provider" component="select"  placeholder="choose your provider">
+            <option value='choose your provider'>choose your provider</option>
+            <option value="needMeat">NeedMeat</option>
+            <option value="bunnyForMoney">BunnyForMoney</option>
+          </Field>
+        </div>
+        <div className="form-row">
+          <label>order ID</label>
           <Field
-            name="employed"
-            id="employed"
+            name="orderid"
             component="input"
-            type="checkbox"
+            type="text"
+            placeholder="order Id"
           />
         </div>
-      </div>
-      <div>
-        <label>Notes</label>
-        <div>
+        <div className="form-row">
+            <label>date</label>
+            <Field
+              name="dateToDone"
+              className="form-control"
+              component="input"
+              type="date"
+            />
+          </div>
+        <div className="form-row">
+          <label>Notes</label>
           <Field name="notes" component="textarea" />
         </div>
       </div>
-      <div>
-        <button type="submit" disabled={pristine || submitting}>Submit</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
+      <div className="form-row-submit">
+        <button type="submit" disabled={pristine || submitting}>Save</button>
       </div>
     </form>
-      // <form className="order-page" onSubmit ={this.onSubmit}>
-      //     <div>
-      //       <h3>Заказчик</h3>
-      //       <div className="row">
-      //         <input type="text" placeholder="E-mail" value={email}  onChange={this.onLabelChangeMail} />
-      //       </div>
-      //       <div className="row">
-      //         <input type="text" placeholder="Name" value={customer}  onChange={this.onLabelChangeName}  />
-      //       </div>
-      //       <div className="row">
-      //         <input type="text" placeholder="Surname" />
-      //       </div>
-      //       <div className="row">
-      //         <input type="text" placeholder="phone" />
-      //       </div>
-      //     </div>
-      //     <div>
-      //       <h3>Заказ</h3>
-      //       <div className="row">
-      //         <input type="text" placeholder="Position" />
-      //       </div>
-      //       <div className="row">
-      //         <select>
-      //           <option>Розница</option>
-      //           <option>Опт</option>
-      //         </select>
-      //       </div>
-      //       <div className="row">
-      //         <select>
-      //           <option>ООО Васины штуки</option>
-      //           <option>ООО Петин Рошен</option>
-      //         </select>
-      //       </div>
-      //       <div className="row">
-      //         <input type="text" placeholder="Order ID" />
-      //       </div>
-      //       <div className="row">
-      //         <input type="text" placeholder="Date" />
-      //       </div>
-      //       <div className="row">
-      //         <textarea placeholder="Comment"></textarea>
-      //       </div>
-      //     </div>
-      //     <button type="submit">Save</button>
-      // </form>
     )
   }
 }
@@ -178,20 +122,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSubmit: (spa) => {
       dispatch(submitForm(spa));
-    },
-    nameForm: (customer) => {
-      dispatch(nameForm(customer));
-    },
-    emailForm: (mail) => {
-      dispatch(emailForm(mail));
+      dispatch(reset('simple'));
     },
   }
 }
 
-
 export default WithSpaService()
 (reduxForm({
-  form: 'simple', // a unique identifier for this form
+  form: 'simple',
 })
 (connect(mapStateToProps, mapDispatchToProps)(OrderPage)
 ));
