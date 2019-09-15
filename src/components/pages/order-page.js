@@ -31,6 +31,11 @@ class OrderPage extends Component {
   OrderChange = (e) => {
     this.setState((state) =>{
       let currentOrderID = null;
+      if (e.target.value == 'choose your order') {
+        return {
+          orderID:`${state.orderID.split('-')[1].replace(/[-]/g, '')}`
+        }
+      }
       if (state.orderID.indexOf('-') > -1) {
         currentOrderID = state.orderID.split('-')[1]
       } else {
@@ -110,6 +115,7 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Type of order</label>
           <Field name="order" component="select" onChange = {this.OrderChange.bind(this)}  placeholder="choose your type">
+            <option value='choose your order'>choose your order</option>
             <option value="retail">retail</option>
             <option value="wholesale">wholesale</option>
           </Field>
@@ -117,7 +123,6 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Provider</label>
           <Field name="provider" component="select"  placeholder="choose your provider">
-            <option value='choose your provider'>choose your provider</option>
             <option value="needMeat">NeedMeat</option>
             <option value="bunnyForMoney">BunnyForMoney</option>
           </Field>
@@ -164,7 +169,8 @@ class OrderPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cartItems:state.reducer.cartItems
+    cartItems:state.reducer.cartItems,
+    order: state.form.simple && state.form.simple.values && state.form.simple.values.order
   };
 }
 const mapDispatchToProps = (dispatch) => {

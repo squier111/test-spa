@@ -14,15 +14,15 @@ class OrderTable extends Component {
     )
   }
 
-  RenderEditBtn = () => {
+  RenderEditBtn = (id) => {
     return (
-      <button onClick = {this.HandleEdit.bind(this)} className="edit-btn">Edit</button>
+      <button onClick = {this.HandleEdit.bind(this, id)} className="edit-btn">Edit</button>
     )
   }
 
-  HandleEdit = (e) => {
+  HandleEdit = (id) => {
     this.setState({modalIsOpen: true});
-    console.log(e.target);
+    console.log(id);
   }
 
   closeModal =() => {
@@ -45,7 +45,7 @@ class OrderTable extends Component {
       const DateToDoneSubtract = moment(formatDateToDone).subtract(3 , 'days').unix();
       let editBtn = null;
       if (moment().unix() < DateToDoneSubtract) {
-        editBtn = this.RenderEditBtn();
+        editBtn = this.RenderEditBtn(id);
       } else {
         editBtn = null;
       }
@@ -90,21 +90,15 @@ class OrderTable extends Component {
           </div>
           <Modal
               isOpen={this.state.modalIsOpen}
-              onAfterOpen={this.afterOpenModal}
+              //onAfterOpen={this.afterOpenModal}
               onRequestClose={this.closeModal.bind(this)}
               contentLabel="Example Modal"
+              ariaHideApp={false}
             >
 
-              <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+              <h3>Edit order</h3>
               <button onClick={this.closeModal}>close</button>
               <div>I am a modal</div>
-              <form>
-                <input />
-                <button>tab navigation</button>
-                <button>stays</button>
-                <button>inside</button>
-                <button>the modal</button>
-              </form>
           </Modal>
       </div>
     )
