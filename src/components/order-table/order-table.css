@@ -19,3 +19,35 @@
     padding: 15px 10px;
     border-bottom: 1px solid #e2e2e3;
 }
+.order-table span.done {
+    background: green;
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px 7px;
+    color:#fff;
+    min-width: 100px;
+    border-radius: 15px;
+}
+.order-table span.confirm {
+    min-width: 100px;
+    background: rgb(82, 82, 212);
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px 7px;
+    color:#fff;
+    border-radius: 15px;
+}
+.order-table .edit-btn {
+    min-width: 100px;
+    outline: none;
+    border: none;
+    background: rgb(0, 156, 213);
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px 7px;
+    color:#fff;
+    border-radius: 15px;
+}
+.order-table .table-holder {
+    overflow-y: auto;
+}

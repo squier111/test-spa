@@ -1,23 +1,62 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-import {submitForm , itemsRequest, itemsError} from '../../actions';
+import {submitForm , orderID} from '../../actions';
 import WithSpaService from '../hoc';
-import {reset} from 'redux-form';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import './order-page.css';
+import moment from 'moment';
 
 class OrderPage extends Component {
+  state = {
+    orderID: '',
+
+  }
+
+  componentDidMount() {
+    const {WithSpaService} = this.props;
+    WithSpaService.getResource()
+    .then((data)=>{
+        this.SetOrderID(data)
+    })
+    .catch((err)=> console.log(err));
+  }
+
+  SetOrderID = (data) => {  
+    const yearMonth = moment().format("YYMM");
+    this.setState({
+      orderID:`${yearMonth}${data.length + 1}`
+    })
+  }
+
+  OrderChange = (e) => {
+    this.setState((state) =>{
+      let currentOrderID = null;
+      if (state.orderID.indexOf('-') > -1) {
+        currentOrderID = state.orderID.split('-')[1]
+      } else {
+        currentOrderID = state.orderID
+      }
+      return {
+        orderID:`${e.target.value.charAt(0)}-${currentOrderID}`
+      }
+    })
+  }
+  
 
   onSubmit =(e) => {
     e.preventDefault();
     const spa = this.props.WithSpaService;
-    this.props.onSubmit(spa);
+    const now = moment().format('L');
+    const orderID = this.state.orderID;
+    this.props.onSubmit(spa, now, orderID);
   }
 
   render () {
+    const now = moment().format('L');
     const { handleSubmit, pristine, submitting, reset } = this.props;
     return (
     <form className="order-form" onSubmit={this.onSubmit}>
+      <h2>Order {this.state.orderID} from {now}</h2>
       <div className="form-part">
         <h3>Customer</h3>
         <div className="form-row">
@@ -70,8 +109,7 @@ class OrderPage extends Component {
         </div>
         <div className="form-row">
           <label>Type of order</label>
-          <Field name="order" component="select"  placeholder="choose your type">
-            <option value='choose your type'>choose your type</option>
+          <Field name="order" component="select" onChange = {this.OrderChange.bind(this)}  placeholder="choose your type">
             <option value="retail">retail</option>
             <option value="wholesale">wholesale</option>
           </Field>
@@ -90,7 +128,16 @@ class OrderPage extends Component {
             name="orderid"
             component="input"
             type="text"
-            placeholder="order Id"
+            component={props => {
+              return (
+                <input
+                  type="text"
+                  disabled="disabled"
+                  value= {this.state.orderID}
+                  {...props}
+                />
+              );
+            }}
           />
         </div>
         <div className="form-row">
@@ -115,15 +162,17 @@ class OrderPage extends Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    cartItems:state.reducer.cartItems
+  };
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (spa) => {
-      dispatch(submitForm(spa));
+    onSubmit: (spa, now, orderID) => {
+      dispatch(submitForm(spa, now, orderID));
       dispatch(reset('simple'));
-    },
+    }
   }
 }
 

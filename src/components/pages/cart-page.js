@@ -32,8 +32,7 @@ class CartPage extends Component {
     if(error) {
       return <ErrorIndicator/>
     }
-
-
+    
     return <div className="card-page">
             <OrderTable items={items}/>
           </div>

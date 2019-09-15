@@ -13,24 +13,32 @@ const itemsRequest = () => {
   };
 };
 
-const itemsError = () => {
+const itemsError = (err) => {
   return {
     type: 'FETCH_ITEMS_ERROR',
+    payload: err
+  };
+};
+
+const orderID = (id) => {
+  return {
+    type: 'FETCH_ORDERID',
+    payload: id
   };
 };
 
 //action-creator отправки формы
 
-const submitForm = (spa) =>  (dispatch , getState) => {
-    const getstate = getState();
-    const full = getstate.form.simple.values;
-    console.log(full);
+const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
+  const getstate = getState();
+  const full = getstate.form.simple.values;
   const data = {
+      data: now,
       email: full.email,
       name: full.name,
       notes: full.notes,
       order: full.order,
-      orderid: full.orderid,
+      orderid: orderID,
       phone: full.phone,
       position: full.position,
       provider: full.provider,
@@ -49,5 +57,6 @@ export {
   itemsLoaded,
   submitForm,
   itemsError,
-  itemsRequest
+  itemsRequest,
+  orderID
 };

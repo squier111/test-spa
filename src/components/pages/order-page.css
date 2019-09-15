@@ -38,6 +38,13 @@
 .form-part {
     border: 1px solid #e2e2e3;
     padding: 10px 10px 10px 20px;
+    margin: 0 0 -1px;
+}
+.order-form h2 {
+    font-size: 17px;
+    line-height: 19px;
+    font-weight: 700;
+    margin: 0 0 10px;
 }
 .form-part h3 {
     font-size: 15px;

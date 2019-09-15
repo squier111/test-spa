@@ -11,14 +11,12 @@ const reducer = (state = initialState, action) => {
     case 'FETCH_ITEMS_REQUESTED':
       return {
         ...state,
-        books: [],
         loading:true,
         error:null,
     };
     case 'FETCH_ITEMS_ERROR':
       return {
         ...state,
-        books: [],
         loading:false,
         error:action.payload,
     };
@@ -28,15 +26,15 @@ const reducer = (state = initialState, action) => {
         cartItems: action.payload, 
         loading:false,
         error:null,
-      };
-      case 'SUBMIT_FORM':
-        return {
-          ...state,
-          newItem: {},
-          isValid: false,
-          loading:true,
-          error:null,
-        };
+    };
+    case 'SUBMIT_FORM':
+      return {
+        ...state,
+        isValid: false,
+        orderId: null,
+        loading:true,
+        error:null,
+    };
     default:
       return state;
   }
