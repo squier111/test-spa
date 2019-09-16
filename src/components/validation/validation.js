@@ -14,7 +14,7 @@ export const validate = values => {
     }
     if (!values.phone) {
       errors.phone = 'Required'
-    } else if (!/^[\+][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(values.email)) {
+    } else if (!/^[\+][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(values.phone)) {
       errors.phone = 'Invalid phone'
     }
     if (!values.surname) {
