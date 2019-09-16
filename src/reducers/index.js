@@ -43,6 +43,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         itemdata: null, 
     };
+    case 'CLEAR_ITEM_DATA':
+      return {
+        ...state,
+        itemdata: null, 
+    };
     default:
       return state;
   }

@@ -16,6 +16,7 @@ class EditForm extends Component {
       const spa = this.props.WithSpaService;
       const id = this.props.id;
       this.props.editsubmitForm(spa, now, id);
+      this.props.closeModal();
     }
   
     render () {

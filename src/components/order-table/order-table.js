@@ -5,7 +5,7 @@ import moment from 'moment';
 import Modal from 'react-modal';
 import EditForm from '../edit-form';
 import WithSpaService from '../hoc';
-import {itemData} from '../../actions';
+import {itemData, clearItemData} from '../../actions';
 
 
 class OrderTable extends Component {
@@ -46,6 +46,7 @@ class OrderTable extends Component {
 
   closeModal =() => {
     this.setState({modalIsOpen: false});
+    this.props.clearItemData();
   }
 
 
@@ -117,7 +118,7 @@ class OrderTable extends Component {
 
               <h3>Edit order</h3>
               <button className="close-btn" onClick={this.closeModal}><i className="fa fa-times-circle-o" aria-hidden="true"></i></button>
-              <EditForm id={this.state.id}/>
+              <EditForm closeModal={()=>this.closeModal()} id={this.state.id}/>
           </Modal>
       </div>
     )
@@ -130,6 +131,9 @@ class OrderTable extends Component {
   }
   const mapDispatchToProps = (dispatch) => {
     return {
+      clearItemData: () => {
+        dispatch(clearItemData());
+      },
       itemData: (item) => {
         dispatch(itemData(item));
       },

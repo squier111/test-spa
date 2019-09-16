@@ -35,6 +35,13 @@ const itemData = (item) => {
   };
 };
 
+const clearItemData = () => {
+  return {
+    type: 'CLEAR_ITEM_DATA',
+  };
+};
+
+
 //action-creator отправки формы
 
 const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
@@ -95,5 +102,6 @@ export {
   itemsRequest,
   orderID,
   itemData,
-  editsubmitForm
+  editsubmitForm,
+  clearItemData
 };
