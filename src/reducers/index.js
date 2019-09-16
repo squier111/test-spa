@@ -1,7 +1,7 @@
 const initialState = {
   loading: true,
-  isValid: false,
   error:null,
+  itemdata: null,
   cartItems: [],
 };
 
@@ -30,10 +30,18 @@ const reducer = (state = initialState, action) => {
     case 'SUBMIT_FORM':
       return {
         ...state,
-        isValid: false,
-        orderId: null,
         loading:true,
         error:null,
+      };
+    case 'FETCH_ITEMDATA':
+      return {
+        ...state,
+        itemdata: action.payload,
+      };
+    case 'EDIT_SUBMIT_FORM':
+      return {
+        ...state,
+        itemdata: null, 
     };
     default:
       return state;

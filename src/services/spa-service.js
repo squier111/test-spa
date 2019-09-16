@@ -11,6 +11,16 @@ export default class SpaService {
     return await res.json();
   }
 
+  getResourceId = async (id) => {
+    const resid = await fetch(`${this._apiBase}/${id}`);
+    
+    if(!resid.ok) {
+      throw new Error(`could not fetch receved ${resid.status}`)
+    }
+    return await resid.json();
+  }
+
+
   postResource = async (data) => {
     const options = {
       method: 'POST',
@@ -23,14 +33,15 @@ export default class SpaService {
       .then((response) => response.json)
   }
 
-  updateResource = async () => {
-    const options1 = {
-      method: 'PUT',
+  updateResource = async (id, data) => {
+    const optionsUpdate = {
+      method: "PATCH",
       headers: {
         'Content-Type': 'application/json'
       },
+      body: JSON.stringify(data)
     }
-    return await fetch(`${this._apiBase}`, options1)
+    return await fetch(`${this._apiBase}/${id}`, optionsUpdate)
       .then((response) => response.json)
   }
 
@@ -38,8 +49,6 @@ export default class SpaService {
 
 
 const service = new SpaService();
-
-
 
 // service.postResource({ customer: "check", typeOrder: "Msd" })
 

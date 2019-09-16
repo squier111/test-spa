@@ -1,12 +1,17 @@
 import React , {Component}  from 'react';
 import './order-table.css';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import Modal from 'react-modal';
+import EditForm from '../edit-form';
+import WithSpaService from '../hoc';
+import {itemData} from '../../actions';
 
 
 class OrderTable extends Component {
   state = {
     modalIsOpen: false,
+    id: null,
   }
   RenderStatus = (status) => {
     return (
@@ -20,9 +25,23 @@ class OrderTable extends Component {
     )
   }
 
+
+  GetcurrentItem = (id) => {
+    const {WithSpaService} = this.props;
+    WithSpaService.getResourceId(id)
+    .then((data)=>{
+      this.props.itemData(data);
+    })
+    .catch((err)=> console.log(err));
+  }
+
+
   HandleEdit = (id) => {
-    this.setState({modalIsOpen: true});
-    console.log(id);
+    this.GetcurrentItem(id)
+    this.setState({
+      modalIsOpen: true,
+      id
+    });
   }
 
   closeModal =() => {
@@ -97,8 +116,8 @@ class OrderTable extends Component {
             >
 
               <h3>Edit order</h3>
-              <button onClick={this.closeModal}>close</button>
-              <div>I am a modal</div>
+              <button className="close-btn" onClick={this.closeModal}><i className="fa fa-times-circle-o" aria-hidden="true"></i></button>
+              <EditForm id={this.state.id}/>
           </Modal>
       </div>
     )
@@ -106,4 +125,16 @@ class OrderTable extends Component {
 }
 
 
-export default OrderTable;
+  const mapStateToProps = (state) => {
+    return {};
+  }
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      itemData: (item) => {
+        dispatch(itemData(item));
+      },
+    }
+  }
+
+
+export default WithSpaService()(connect(mapStateToProps, mapDispatchToProps)(OrderTable));

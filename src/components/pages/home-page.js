@@ -18,6 +18,7 @@ const buttonStyle = {
   paddingTop: '7px',
   height: '40px',
   textAlign:'center',
+  textDecoration:'none',
 }
 
 

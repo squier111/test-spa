@@ -27,6 +27,14 @@ const orderID = (id) => {
   };
 };
 
+
+const itemData = (item) => {
+  return {
+    type: 'FETCH_ITEMDATA',
+    payload: item
+  };
+};
+
 //action-creator отправки формы
 
 const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
@@ -53,10 +61,39 @@ const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
 };
 
 
+const editsubmitForm = (spa, now, id) =>  (dispatch , getState) => {
+  console.log("sadsad");
+  const getstate = getState();
+  const editFull = getstate.form.simple.values;
+  const iditem = id;
+  const data = {
+      data: now,
+      email: editFull.email,
+      name: editFull.name,
+      notes: editFull.notes,
+      order: editFull.order,
+      orderid: editFull.orderID,
+      phone: editFull.phone,
+      position: editFull.position,
+      provider: editFull.provider,
+      surname: editFull.surname,
+      dateToDone: editFull.dateToDone,
+      status: editFull.status,
+    };
+    spa.updateResource(iditem, data);
+    dispatch({
+      type: 'EDIT_SUBMIT_FORM'
+    });
+};
+
+
+
 export {
   itemsLoaded,
   submitForm,
   itemsError,
   itemsRequest,
-  orderID
+  orderID,
+  itemData,
+  editsubmitForm
 };
