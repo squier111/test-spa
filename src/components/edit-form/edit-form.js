@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 import { connect } from 'react-redux';
 import {editsubmitForm} from '../../actions';
 import { Field, reduxForm } from 'redux-form';
+import {renderField , validate} from '../validation';
 import './edit-form.css';
 import WithSpaService from '../hoc';
 import moment from 'moment';
@@ -28,7 +29,7 @@ class EditForm extends Component {
             <label>Email</label>
               <Field
                 name="email"
-                component="input"
+                component={renderField}
                 type="email"
                 placeholder="Email"
                 />
@@ -37,7 +38,7 @@ class EditForm extends Component {
             <label>Name</label>
             <Field
               name="name"
-              component="input"
+              component={renderField}
               type="text"
               placeholder="Name"
             />
@@ -46,7 +47,7 @@ class EditForm extends Component {
             <label>Surname</label>
             <Field
               name="surname"
-              component="input"
+              component={renderField}
               type="text"
               placeholder="Surname"
             />
@@ -55,7 +56,7 @@ class EditForm extends Component {
             <label>Phone</label>
             <Field
               name="phone"
-              component="input"
+              component={renderField}
               type="text"
               placeholder="Phone"
             />
@@ -67,7 +68,7 @@ class EditForm extends Component {
             <label>Position</label>
             <Field
               name="position"
-              component="input"
+              component={renderField}
               type="text"
               placeholder="Position"
             />
@@ -137,6 +138,7 @@ class EditForm extends Component {
   connect(mapStateToProps, mapDispatchToProps)( 
   reduxForm({
     form: 'simple',
+    validate
   })
   (EditForm)));
 

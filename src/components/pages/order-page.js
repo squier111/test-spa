@@ -1,24 +1,13 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
 import {submitForm , orderID} from '../../actions';
+import {renderField , validate} from '../validation';
 import WithSpaService from '../hoc';
 import { Field, reduxForm, reset } from 'redux-form';
 import './order-page.css';
 import moment from 'moment';
 
 
-const required = value => value ? undefined : 'Required';
-
-const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
-  'Invalid email address' : undefined
-
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  <div className="holder">
-    <input {...input} placeholder={label} type={type}/>
-    {touched && ((error && <span> <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {error}</span>) || (warning && <span> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>  {warning}</span>))}
-  </div>
-)
 
 
 class OrderPage extends Component {
@@ -63,7 +52,7 @@ class OrderPage extends Component {
   }
   
 
-  onSubmit =(e) => {
+  onSubmit =(e, validate) => {
     e.preventDefault();
     const spa = this.props.WithSpaService;
     const now = moment().format('L');
@@ -75,7 +64,7 @@ class OrderPage extends Component {
     const now = moment().format('L');
     const { pristine, submitting, reset } = this.props;
     return (
-    <form className="order-form" onSubmit={this.onSubmit}>
+    <form className="order-form" onSubmit={(e)=> this.onSubmit(e)}>
       <h2>Order {this.state.orderID} from {now}</h2>
       <div className="form-part">
         <h3>Customer</h3>
@@ -83,7 +72,7 @@ class OrderPage extends Component {
           <label>Email</label>
             <Field
               name="email"
-              component="input"
+              component={renderField}
               type="email"
               placeholder="Email"
               />
@@ -91,7 +80,6 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Name</label>
           <Field
-            validate={[required]}
             name="name"
             component={renderField}
             type="text"
@@ -101,9 +89,7 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Surname</label>
           <Field
-            validate={[required]}
             name="surname"
-            component="input"
             type="text"
             component={renderField}
             placeholder="Surname"
@@ -112,10 +98,8 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Phone</label>
           <Field
-            validate={[required]}
             name="phone"
-            component={email}
-            component="input"
+            component={renderField}
             type="text"
             placeholder="Phone"
           />
@@ -127,7 +111,7 @@ class OrderPage extends Component {
           <label>Position</label>
           <Field
             name="position"
-            component="input"
+            component={renderField}
             type="text"
             placeholder="Position"
           />
@@ -143,6 +127,7 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Provider</label>
           <Field name="provider" component="select"  placeholder="choose your provider">
+          <option value="choose your provider">choose your provider</option>
             <option value="needMeat">NeedMeat</option>
             <option value="bunnyForMoney">BunnyForMoney</option>
           </Field>
@@ -202,9 +187,12 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+
+
 export default WithSpaService()
 (reduxForm({
   form: 'simple',
+  validate
 })
 (connect(mapStateToProps, mapDispatchToProps)(OrderPage)
 ));

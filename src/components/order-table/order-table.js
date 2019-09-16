@@ -110,7 +110,6 @@ class OrderTable extends Component {
           </div>
           <Modal
               isOpen={this.state.modalIsOpen}
-              //onAfterOpen={this.afterOpenModal}
               onRequestClose={this.closeModal.bind(this)}
               contentLabel="Example Modal"
               ariaHideApp={false}
