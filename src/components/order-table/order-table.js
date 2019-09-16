@@ -127,7 +127,9 @@ class OrderTable extends Component {
 
 
   const mapStateToProps = (state) => {
-    return {};
+    return {
+      items: state.reducer.cartItems,
+    };
   }
   const mapDispatchToProps = (dispatch) => {
     return {

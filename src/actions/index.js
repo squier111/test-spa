@@ -69,7 +69,6 @@ const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
 
 
 const editsubmitForm = (spa, now, id) =>  (dispatch , getState) => {
-  console.log("sadsad");
   const getstate = getState();
   const editFull = getstate.form.simple.values;
   const iditem = id;
@@ -89,7 +88,8 @@ const editsubmitForm = (spa, now, id) =>  (dispatch , getState) => {
     };
     spa.updateResource(iditem, data);
     dispatch({
-      type: 'EDIT_SUBMIT_FORM'
+      type: 'EDIT_SUBMIT_FORM',
+      payload: editFull
     });
 };
 

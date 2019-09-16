@@ -39,8 +39,18 @@ const reducer = (state = initialState, action) => {
         itemdata: action.payload,
       };
     case 'EDIT_SUBMIT_FORM':
+      const inx = state.cartItems.findIndex((item)=> item.id === action.payload.id);
+      const newItemDec ={
+        ...action.payload
+      }
       return {
         ...state,
+        cartItems: [
+          ...state.cartItems.slice(0 , inx),
+            newItemDec,
+          ...state.cartItems.slice(inx + 1),
+          
+        ],
         itemdata: null, 
     };
     case 'CLEAR_ITEM_DATA':

@@ -34,7 +34,7 @@ class CartPage extends Component {
     }
     
     return <div className="card-page">
-            <OrderTable items={items}/>
+            <OrderTable/>
           </div>
   }
 }

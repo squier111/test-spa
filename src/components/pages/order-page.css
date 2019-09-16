@@ -17,7 +17,21 @@
     padding: 0 10px;
 }
 .order-form .form-row {
-    margin: 0 0 10px;
+    padding: 0 0 30px;
+    position: relative;
+}
+.order-form .form-row .holder {
+    width: 60%;
+    position: relative;
+}
+.order-form .form-row .holder input {
+    width: 100%;
+}
+.order-form .form-row span {
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    color: red;
 }
 .order-form .form-row-submit {
     margin: 0 0 10px;

@@ -6,6 +6,21 @@ import { Field, reduxForm, reset } from 'redux-form';
 import './order-page.css';
 import moment from 'moment';
 
+
+const required = value => value ? undefined : 'Required';
+
+const email = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
+  'Invalid email address' : undefined
+
+const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+  <div className="holder">
+    <input {...input} placeholder={label} type={type}/>
+    {touched && ((error && <span> <i class="fa fa-exclamation-circle" aria-hidden="true"></i> {error}</span>) || (warning && <span> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>  {warning}</span>))}
+  </div>
+)
+
+
 class OrderPage extends Component {
   state = {
     orderID: '',
@@ -58,7 +73,7 @@ class OrderPage extends Component {
 
   render () {
     const now = moment().format('L');
-    const { handleSubmit, pristine, submitting, reset } = this.props;
+    const { pristine, submitting, reset } = this.props;
     return (
     <form className="order-form" onSubmit={this.onSubmit}>
       <h2>Order {this.state.orderID} from {now}</h2>
@@ -76,8 +91,9 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Name</label>
           <Field
+            validate={[required]}
             name="name"
-            component="input"
+            component={renderField}
             type="text"
             placeholder="Name"
           />
@@ -85,16 +101,20 @@ class OrderPage extends Component {
         <div className="form-row">
           <label>Surname</label>
           <Field
+            validate={[required]}
             name="surname"
             component="input"
             type="text"
+            component={renderField}
             placeholder="Surname"
           />
         </div>
         <div className="form-row">
           <label>Phone</label>
           <Field
+            validate={[required]}
             name="phone"
+            component={email}
             component="input"
             type="text"
             placeholder="Phone"

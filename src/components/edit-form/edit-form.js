@@ -92,6 +92,7 @@ class EditForm extends Component {
               name="orderid"
               component="input"
               type="text"
+              disabled
             />
           </div>
           <div className="form-row">
