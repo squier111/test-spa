@@ -66,3 +66,8 @@
     font-weight: 700;
     margin: 0 0 20px;
 }
+.order-form  .close-btn {
+    position: absolute;
+    top: 56px;
+    right: 30px;
+}
