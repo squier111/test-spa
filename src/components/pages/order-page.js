@@ -7,9 +7,6 @@ import { Field, reduxForm, reset } from 'redux-form';
 import './order-page.css';
 import moment from 'moment';
 
-
-
-
 class OrderPage extends Component {
   state = {
     orderID: '',
@@ -50,10 +47,13 @@ class OrderPage extends Component {
       }
     })
   }
+
+
+
+
   
 
-  onSubmit =(e, validate) => {
-    e.preventDefault();
+  handleSubmit =() => {
     const spa = this.props.WithSpaService;
     const now = moment().format('L');
     const orderID = this.state.orderID;
@@ -62,9 +62,10 @@ class OrderPage extends Component {
 
   render () {
     const now = moment().format('L');
-    const { pristine, submitting, reset } = this.props;
+    const { error , pristine, submitting, handleSubmit } = this.props;
     return (
-    <form className="order-form" onSubmit={(e)=> this.onSubmit(e)}>
+    <form className="order-form"
+            onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
       <h2>Order {this.state.orderID} from {now}</h2>
       <div className="form-part">
         <h3>Customer</h3>
@@ -164,6 +165,7 @@ class OrderPage extends Component {
           <Field name="notes" component="textarea" />
         </div>
       </div>
+      {error && <strong>{error}</strong>}
       <div className="form-row-submit">
         <button type="submit" disabled={pristine || submitting}>Save</button>
       </div>

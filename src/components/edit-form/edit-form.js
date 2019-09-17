@@ -10,19 +10,20 @@ import moment from 'moment';
 
 
 class EditForm extends Component {
-  
-    onSubmit =(e) => {
-      e.preventDefault();
+
+    handleSubmit = () => {
       const now = moment().format('L');
       const spa = this.props.WithSpaService;
       const id = this.props.id;
       this.props.editsubmitForm(spa, now, id);
       this.props.closeModal();
     }
-  
+
     render () {
+      const { handleSubmit} = this.props;
       return (
-      <form className="order-form" onSubmit={this.onSubmit}>
+      <form className="order-form" 
+      onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
         <div className="form-part">
           <h3>Customer</h3>
           <div className="form-row">
@@ -72,13 +73,6 @@ class EditForm extends Component {
               type="text"
               placeholder="Position"
             />
-          </div>
-          <div className="form-row">
-            <label>Type of order</label>
-            <Field name="order" component="select" placeholder="choose your type">
-              <option value="retail">retail</option>
-              <option value="wholesale">wholesale</option>
-            </Field>
           </div>
           <div className="form-row">
             <label>Provider</label>
