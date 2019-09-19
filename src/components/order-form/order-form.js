@@ -15,12 +15,12 @@ class OrderForm extends Component {
   }
 
   componentDidMount() {
-    const {WithSpaService} = this.props;
-    WithSpaService.getResource()
-    .then((data)=>{
-        this.SetOrderID(data)
-    })
-    .catch((err)=> console.log(err));
+    // const {WithSpaService} = this.props;
+    // WithSpaService.getResource()
+    // .then((data)=>{
+    //     this.SetOrderID(data)
+    // })
+    // .catch((err)=> console.log(err));
   }
 
   SetOrderID = (data) => {  

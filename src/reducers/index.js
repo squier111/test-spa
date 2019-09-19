@@ -56,7 +56,7 @@ const reducer = (state = initialState, action) => {
     case 'CLEAR_ITEM_DATA':
       return {
         ...state,
-        itemdata: null, 
+        itemdata: null,
     };
     default:
       return state;

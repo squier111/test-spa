@@ -1,4 +1,6 @@
-
+import {takeLatest,  put, call, all} from 'redux-saga/effects';
+import SpaService from '../services/spa-service';
+const service = new SpaService();
 
 const itemsLoaded = (newitems) => {
   return {
@@ -27,7 +29,6 @@ const orderID = (id) => {
   };
 };
 
-
 const itemData = (item) => {
   return {
     type: 'FETCH_ITEMDATA',
@@ -41,9 +42,12 @@ const clearItemData = () => {
   };
 };
 
+const fetchItem = () => {
+  return { type: 'FETCHED_ITEM' }
+};
 
-//action-creator отправки формы
 
+// thunk action-creator отправки формы
 const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
   const getstate = getState();
   const full = getstate.form.simple.values;
@@ -93,6 +97,30 @@ const editsubmitForm = (spa, now, id) =>  (dispatch , getState) => {
     });
 };
 
+// Sagas
+const watchFetchItems = function* watchFetchItem() {
+  yield takeLatest('FETCHED_ITEM', fetchItemsAsync);
+}
+
+function* fetchItemsAsync() {
+  try {
+    yield put(itemsRequest());
+    const data = yield call(() => {
+      return service.getResource()
+                    .then(res =>res);
+      }
+    );
+    yield put(itemsLoaded(data));
+  } catch (error) {
+    yield put(itemsError());
+  }
+}
+
+function* rootSaga() {
+  yield all([
+    watchFetchItems(),
+  ]);
+}
 
 
 export {
@@ -103,5 +131,8 @@ export {
   orderID,
   itemData,
   editsubmitForm,
-  clearItemData
+  clearItemData,
+  fetchItemsAsync,
+  fetchItem,
+  rootSaga
 };

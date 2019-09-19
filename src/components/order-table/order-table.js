@@ -104,7 +104,7 @@ class OrderTable extends Component {
                 </tr>
               </thead>
               <tbody>
-                  {this.props.items.map(this.RenderRow)}  
+                  {this.props.items.map(this.RenderRow)}
               </tbody>
             </table>
           </div>

@@ -48,10 +48,9 @@ export default class SpaService {
 }
 
 
-const service = new SpaService();
+//const service = new SpaService();
 
 // service.postResource({ customer: "check", typeOrder: "Msd" })
 
-service.getResource().then((orderInfo)=>{
-    // console.log(orderInfo);
-});
+// service.getResource().then((orderInfo)=>{
+// });
