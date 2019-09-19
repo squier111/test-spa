@@ -42,8 +42,8 @@ const clearItemData = () => {
   };
 };
 
-const fetchItem = () => {
-  return { type: 'FETCHED_ITEM' }
+const fetchItem = (item) => {
+  return { type: 'FETCHED_ITEM' ,  payload: item}
 };
 
 
@@ -102,7 +102,8 @@ const watchFetchItems = function* watchFetchItem() {
   yield takeLatest('FETCHED_ITEM', fetchItemsAsync);
 }
 
-function* fetchItemsAsync() {
+function* fetchItemsAsync(action) {
+  console.log(action.payload)
   try {
     yield put(itemsRequest());
     const data = yield call(() => {

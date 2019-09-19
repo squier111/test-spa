@@ -9,7 +9,7 @@ import {fetchItem} from '../../actions';
 class CartPage extends Component {
 
   componentDidMount() {
-    this.props.fetchItem();
+    this.props.fetchItem("bar");
   }
 
   render() {
@@ -37,8 +37,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchItem: () => {
-      dispatch(fetchItem());
+    fetchItem: (item) => {
+      dispatch(fetchItem(item));
     }
   };
 }

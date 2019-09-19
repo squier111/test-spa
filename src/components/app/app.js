@@ -14,11 +14,11 @@ class App extends Component {
           <Header/>
           <div className="router">
             <Switch>
-              {/* <Route
+              <Route
                 path='/'
                 component ={HomePage}
                 exact
-                /> */}
+                />
               <Route
                 path='/cart'
                 component ={CartPage}
@@ -38,5 +38,3 @@ class App extends Component {
 
 
 export default App;
-
-
