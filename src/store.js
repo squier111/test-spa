@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 import { reducer as reduxFormReducer } from 'redux-form';
 import reducer from './reducers';
 import createSagaMiddleware from 'redux-saga';
-import {rootSaga} from './actions'
+import rootSaga from './sagas'
 
 const sagaMiddleware = createSagaMiddleware();
 

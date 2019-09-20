@@ -19,7 +19,6 @@ class OrderForm extends Component {
   }
 
   SetOrderID = (data) => {
-    console.log(data)
     const yearMonth = moment().format("YYMM");
     this.setState({
       orderID:`${yearMonth}${data.length + 1}`
