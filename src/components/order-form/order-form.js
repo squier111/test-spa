@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-import {submitForm , orderID} from '../../actions';
+import {fetchSubmit} from '../../actions';
 import {renderField , validate} from '../validation';
 import WithSpaService from '../hoc';
 import { Field, reduxForm, reset } from 'redux-form';
@@ -15,15 +15,11 @@ class OrderForm extends Component {
   }
 
   componentDidMount() {
-    // const {WithSpaService} = this.props;
-    // WithSpaService.getResource()
-    // .then((data)=>{
-    //     this.SetOrderID(data)
-    // })
-    // .catch((err)=> console.log(err));
+    this.SetOrderID(this.props.cartItems)
   }
 
-  SetOrderID = (data) => {  
+  SetOrderID = (data) => {
+    console.log(data)
     const yearMonth = moment().format("YYMM");
     this.setState({
       orderID:`${yearMonth}${data.length + 1}`
@@ -51,14 +47,11 @@ class OrderForm extends Component {
 
 
 
-
-  
-
   handleSubmit =() => {
-    const spa = this.props.WithSpaService;
-    const now = moment().format('L');
-    const orderID = this.state.orderID;
-    this.props.onSubmit(spa, now, orderID);
+    const data = {};
+    data.now = moment().format('L');;
+    data.orderID = this.state.orderID;
+    this.props.fetchSubmit(data);
   }
 
   render () {
@@ -184,8 +177,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (spa, now, orderID) => {
-      dispatch(submitForm(spa, now, orderID));
+    fetchSubmit: (data) => {
+      dispatch(fetchSubmit(data));
       dispatch(reset('simple'));
     }
   }

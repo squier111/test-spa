@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
 import { connect } from 'react-redux';
-import {editsubmitForm} from '../../actions';
+import {fetchEditSubmit} from '../../actions';
 import { Field, reduxForm } from 'redux-form';
 import {renderField , validate} from '../validation';
 import './edit-form.css';
@@ -12,10 +12,10 @@ import moment from 'moment';
 class EditForm extends Component {
 
     handleSubmit = () => {
-      const now = moment().format('L');
-      const spa = this.props.WithSpaService;
-      const id = this.props.id;
-      this.props.editsubmitForm(spa, now, id);
+      const data = {};
+      data.now = moment().format('L');
+      data.id = this.props.id;
+      this.props.fetchEditSubmit(data);
       this.props.closeModal();
     }
 
@@ -121,8 +121,8 @@ class EditForm extends Component {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-      editsubmitForm: (spa, now, id) => {
-        dispatch(editsubmitForm(spa, now, id));
+      fetchEditSubmit: (data) => {
+        dispatch(fetchEditSubmit(data));
       },
     }
   }

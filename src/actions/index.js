@@ -1,4 +1,4 @@
-import {takeLatest,  put, call, all} from 'redux-saga/effects';
+import {takeLatest,  put, call, all, select} from 'redux-saga/effects';
 import SpaService from '../services/spa-service';
 const service = new SpaService();
 
@@ -42,68 +42,44 @@ const clearItemData = () => {
   };
 };
 
+const submitForm = () => {
+  return { type: 'SUBMIT_FORM'}
+};
+
+const editsubmitForm = (data) => {
+  return { type: 'EDIT_SUBMIT_FORM' , payload: data}
+};
+
 const fetchItem = (item) => {
   return { type: 'FETCHED_ITEM' ,  payload: item}
 };
 
+const fetchSubmit = (data) => {
+  return { type: 'FETCHED_SUBMIT' ,  payload: data}
+};
 
-// thunk action-creator отправки формы
-const submitForm = (spa, now, orderID) =>  (dispatch , getState) => {
-  const getstate = getState();
-  const full = getstate.form.simple.values;
-  const data = {
-      data: now,
-      email: full.email,
-      name: full.name,
-      notes: full.notes,
-      order: full.order,
-      orderid: orderID,
-      phone: full.phone,
-      position: full.position,
-      provider: full.provider,
-      surname: full.surname,
-      dateToDone: full.dateToDone,
-      status: 'done',
-    };
-    spa.postResource(data);
-  dispatch({
-    type: 'SUBMIT_FORM'
-  });
+const fetchEditSubmit = (data) => {
+  return { type: 'FETCHED_EDIT_SUBMIT' ,  payload: data}
 };
 
 
-const editsubmitForm = (spa, now, id) =>  (dispatch , getState) => {
-  const getstate = getState();
-  const editFull = getstate.form.simple.values;
-  const iditem = id;
-  const data = {
-      data: now,
-      email: editFull.email,
-      name: editFull.name,
-      notes: editFull.notes,
-      order: editFull.order,
-      orderid: editFull.orderID,
-      phone: editFull.phone,
-      position: editFull.position,
-      provider: editFull.provider,
-      surname: editFull.surname,
-      dateToDone: editFull.dateToDone,
-      status: editFull.status,
-    };
-    spa.updateResource(iditem, data);
-    dispatch({
-      type: 'EDIT_SUBMIT_FORM',
-      payload: editFull
-    });
-};
 
 // Sagas
 const watchFetchItems = function* watchFetchItem() {
   yield takeLatest('FETCHED_ITEM', fetchItemsAsync);
 }
 
-function* fetchItemsAsync(action) {
-  console.log(action.payload)
+const watchFetchSubmit = function* watchFetchSubmit() {
+  yield takeLatest('FETCHED_SUBMIT', fetchSubmitAsync);
+}
+
+const watchFetchEditSubmit = function* watchFetchEditSubmit() {
+  yield takeLatest('FETCHED_EDIT_SUBMIT', fetchEditSubmitAsync);
+}
+
+function* fetchItemsAsync() {
+  const state = yield select();
+  console.log(state)
   try {
     yield put(itemsRequest());
     const data = yield call(() => {
@@ -117,9 +93,52 @@ function* fetchItemsAsync(action) {
   }
 }
 
+function* fetchSubmitAsync(action) {
+  const getstate = yield select();
+  console.log(action.payload);
+  const full = getstate.form.simple.values;
+  const data = {
+      ...full,
+      data: action.payload.now,
+      orderid: action.payload.orderID,
+      status: 'done',
+  };
+  try {
+    yield call(() => {
+      return service.postResource(data)
+      }
+    );
+    yield put(submitForm());
+  } catch (error) {
+    yield put(itemsError(error));
+  }
+}
+
+function* fetchEditSubmitAsync(action) {
+  const getstate = yield select();
+  console.log(action.payload);
+  const editFull = getstate.form.simple.values;
+  const iditem = action.payload.id;
+  const data = {
+      ...editFull,
+      data: action.payload.now,
+  };
+  try {
+    yield call(() => {
+      return service.updateResource(iditem, data);
+      }
+    );
+    yield put(editsubmitForm(editFull));
+  } catch (error) {
+    yield put(itemsError(error));
+  }
+}
+
 function* rootSaga() {
   yield all([
     watchFetchItems(),
+    watchFetchSubmit(),
+    watchFetchEditSubmit()
   ]);
 }
 
@@ -135,5 +154,7 @@ export {
   clearItemData,
   fetchItemsAsync,
   fetchItem,
-  rootSaga
+  fetchSubmit,
+  fetchEditSubmit,
+  rootSaga,
 };
